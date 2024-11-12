@@ -6,9 +6,9 @@ import java.util.Objects;
 
 
 @Entity
-@Table
+@Table(name = "Clientes")
 
-public class Clientes {
+public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,7 +81,7 @@ public class Clientes {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Clientes clientes = (Clientes) o;
+        Cliente clientes = (Cliente) o;
         return Objects.equals(id_cliente, clientes.id_cliente);
     }
 

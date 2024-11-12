@@ -1,41 +1,41 @@
 package com.example.projetoTechAcademy.controller;
 
-import com.example.projetoTechAcademy.dto.ClientesRequestDTO;
-import com.example.projetoTechAcademy.model.Clientes;
-import com.example.projetoTechAcademy.repository.ClientesRepository;
+import com.example.projetoTechAcademy.dto.ClienteRequestDTO;
+import com.example.projetoTechAcademy.model.Cliente;
+import com.example.projetoTechAcademy.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/clientes")
-public class ClientesController {
+public class ClienteController {
 
     @Autowired
-    private ClientesRepository repository;
+    private ClienteRepository repository;
 
     @GetMapping
-    public List<Clientes> findAll() {
+    public List<Cliente> findAll() {
         return  this.repository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Clientes findById(@PathVariable Integer id){
+    public Cliente findById(@PathVariable Integer id){
         return this.repository.findById(id)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Cliente não foi encontrada"));
     }
 
     @PostMapping
-    public Clientes save(@RequestBody ClientesRequestDTO dto) {
+    public Cliente save(@RequestBody ClienteRequestDTO dto) {
 
-
-        Clientes clientes = new Clientes();
+        Cliente clientes = new Cliente();
         clientes.setNome(dto.nome());
-
-
+        clientes.setEmail(dto.email());
+        clientes.setSenha(dto.senha());
+        clientes.setTel(dto.tel());
+        clientes.setEndereco(dto.endereco());
 
         return this.repository.save(clientes);
     }
