@@ -4,6 +4,7 @@ import com.example.projetoTechAcademy.dto.ClienteRequestDTO;
 import com.example.projetoTechAcademy.model.Cliente;
 import com.example.projetoTechAcademy.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,5 @@ public class ClienteController {
 
         return this.repository.save(clientes);
     }
-
 
 }
