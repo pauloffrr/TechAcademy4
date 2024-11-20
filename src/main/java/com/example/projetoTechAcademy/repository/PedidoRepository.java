@@ -1,4 +1,7 @@
 package com.example.projetoTechAcademy.repository;
 
-public interface PedidoRepository {
+import com.example.projetoTechAcademy.model.Pedido;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 }

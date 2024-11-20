@@ -1,4 +1,10 @@
 package com.example.projetoTechAcademy.dto;
 
-public record PedidoRequestDTO() {
+import java.util.Date;
+
+public record PedidoRequestDTO(
+        Date data_pedido,
+        String status_pedido,
+        Integer valor_total
+) {
 }
