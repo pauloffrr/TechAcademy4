@@ -1,9 +1,11 @@
 package com.example.projetoTechAcademy.controller;
 
+
 import com.example.projetoTechAcademy.dto.ClienteRequestDTO;
 import com.example.projetoTechAcademy.model.Cliente;
 import com.example.projetoTechAcademy.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +41,33 @@ public class ClienteController {
         clientes.setEndereco(dto.endereco());
 
         return this.repository.save(clientes);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        Cliente cliente = this.repository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Cliente não foi encontrada"));
+
+        this.repository.delete(cliente);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Cliente> update(@PathVariable Integer id, @RequestBody ClienteRequestDTO dto) {
+        if (dto.nome().isEmpty()) {
+            return ResponseEntity.status(428).build();
+        }
+
+        Cliente cliente = this.repository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Cliente não foi encontrada"));
+
+        cliente.setNome(dto.nome());
+
+        this.repository.save(cliente);
+        return ResponseEntity.ok(cliente);
     }
 
 }

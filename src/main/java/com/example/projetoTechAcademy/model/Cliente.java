@@ -12,7 +12,8 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_cliente;
+    @Column (name= "id_cliente")
+    private Integer idCliente;
 
     @Column
     private String nome;
@@ -30,11 +31,11 @@ public class Cliente {
     private String endereco;
 
     public Integer getId_cliente() {
-        return id_cliente;
+        return idCliente;
     }
 
     public void setId_cliente(Integer id_cliente) {
-        this.id_cliente = id_cliente;
+        this.idCliente = id_cliente;
     }
 
     public String getNome() {
@@ -82,11 +83,11 @@ public class Cliente {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cliente clientes = (Cliente) o;
-        return Objects.equals(id_cliente, clientes.id_cliente);
+        return Objects.equals(idCliente, clientes.idCliente);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id_cliente);
+        return Objects.hashCode(idCliente);
     }
 }

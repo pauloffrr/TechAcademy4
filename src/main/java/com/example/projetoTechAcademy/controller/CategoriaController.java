@@ -36,7 +36,7 @@ public class CategoriaController {
         }
 
         Categoria categoria = new Categoria();
-        categoria.setNome_categoria(dto.nome_categoria());
+        categoria.setNomeCategoria(dto.nome_categoria());
 
         this.repository.save(categoria);
         return ResponseEntity.ok(categoria);
@@ -62,7 +62,7 @@ public class CategoriaController {
                 .orElseThrow(() ->
                         new IllegalArgumentException("Categoria não foi encontrada"));
 
-        categoria.setNome_categoria(dto.nome_categoria());
+        categoria.setNomeCategoria(dto.nome_categoria());
 
         this.repository.save(categoria);
         return ResponseEntity.ok(categoria);
