@@ -2,7 +2,7 @@ package com.example.projetoTechAcademy.model;
 
 import jakarta.persistence.Column;
 
-import javax.naming.InterruptedNamingException;
+
 import java.util.Objects;
 
 public class ProdutoPedidoPK {

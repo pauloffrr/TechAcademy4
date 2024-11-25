@@ -26,7 +26,7 @@ public class PedidoController {
         public Pedido findById(@PathVariable Integer id){
             return this.repository.findById(id)
                     .orElseThrow(() ->
-                            new IllegalArgumentException("Pedido não foi encontrada"));
+                            new IllegalArgumentException("Pedido não foi encontrado"));
         }
 
         @PostMapping
@@ -45,7 +45,7 @@ public class PedidoController {
         public ResponseEntity<Void> delete(@PathVariable Integer id) {
             Pedido pedido = this.repository.findById(id)
                     .orElseThrow(() ->
-                            new IllegalArgumentException("Pedido não foi encontrada"));
+                            new IllegalArgumentException("Pedido não foi encontrado"));
 
             this.repository.delete(pedido);
             return ResponseEntity.noContent().build();
@@ -59,7 +59,7 @@ public class PedidoController {
 
             Pedido pedido = this.repository.findById(id)
                     .orElseThrow(() ->
-                            new IllegalArgumentException("Status não foi encontrada"));
+                            new IllegalArgumentException("Status não foi encontrado"));
 
             pedido.setStatusPedido(dto.status_pedido());
 
