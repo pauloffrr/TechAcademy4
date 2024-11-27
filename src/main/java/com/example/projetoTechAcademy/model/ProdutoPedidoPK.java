@@ -1,10 +1,13 @@
 package com.example.projetoTechAcademy.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
 
+import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
 public class ProdutoPedidoPK {
 
     @Column(name = "id_pedido")

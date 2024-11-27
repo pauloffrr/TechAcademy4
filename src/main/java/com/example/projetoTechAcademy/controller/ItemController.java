@@ -3,10 +3,16 @@ package com.example.projetoTechAcademy.controller;
 
 import com.example.projetoTechAcademy.dto.ItemRequestDTO;
 import com.example.projetoTechAcademy.model.Item;
+import com.example.projetoTechAcademy.model.Pedido;
+import com.example.projetoTechAcademy.model.ProdutoPedido;
+import com.example.projetoTechAcademy.model.ProdutoPedidoPK;
 import com.example.projetoTechAcademy.repository.ItemRepository;
+import com.example.projetoTechAcademy.repository.PedidoRepositoy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -15,6 +21,9 @@ public class ItemController {
 
         @Autowired
         private ItemRepository repository;
+
+        @Autowired
+        private PedidoRepositoy pedidoRepositoy;
 
         @GetMapping
         public List<Item> findAll() {
@@ -67,4 +76,30 @@ public class ItemController {
             return ResponseEntity.ok(item);
         }
 
+    @PostMapping("/{id}/add-pedido")
+    public ResponseEntity<Item> addPedido(@PathVariable Integer id,
+                                          @RequestBody Integer pedidoId) {
+
+        Item item = repository.findById(id).orElseThrow(() -> new RuntimeException("Item não encontrado"));
+        Pedido pedido = pedidoRepositoy.findById(pedidoId).orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+
+        ProdutoPedidoPK pk = new ProdutoPedidoPK();
+        pk.setIdItem(item.getIdItem());
+        pk.setIdPedido(pedido.getIdPedido());
+
+        ProdutoPedido produtoPedido = new ProdutoPedido();
+        produtoPedido.setId(pk);
+        produtoPedido.setPedido(pedido);
+        produtoPedido.setItem(item);
+
+        item.addPedido(produtoPedido);
+
+
+        repository.save(item);
+
+        return ResponseEntity.ok(item);
+
     }
+
+    }
+

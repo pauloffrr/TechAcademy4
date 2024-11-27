@@ -2,6 +2,9 @@ package com.example.projetoTechAcademy.model;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table
@@ -28,7 +31,8 @@ public class Item {
     @Column(name = "imagem_url")
     private String imagemUrl;
 
-
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProdutoPedido> pedidos = new ArrayList<>();
 
     public Integer getIdItem() {
         return idItem;
@@ -77,4 +81,29 @@ public class Item {
     public void setImagemUrl(String imagemUrl) {
         this.imagemUrl = imagemUrl;
     }
+
+    public void setPedidos(List<ProdutoPedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public void addPedido(ProdutoPedido produtoPedido) {
+        if (this.pedidos == null) {
+            this.pedidos = new ArrayList<>();
+        }
+        this.pedidos.add(produtoPedido);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Objects.equals(idItem, item.idItem);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(idItem);
+    }
+
 }
