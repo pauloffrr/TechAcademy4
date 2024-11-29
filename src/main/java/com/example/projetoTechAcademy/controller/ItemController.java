@@ -71,6 +71,9 @@ public class ItemController {
                             new IllegalArgumentException("Item não foi encontrada"));
 
             item.setNome(dto.nomeItem());
+            item.setDescProduto(dto.descProduto());
+            item.setPreco(dto.preco());
+            item.setImagemUrl(dto.imagemUrl());
 
             this.repository.save(item);
             return ResponseEntity.ok(item);
