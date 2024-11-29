@@ -6,10 +6,10 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "ItemPedido")
-public class ProdutoPedido {
+public class ItemPedido {
 
     @EmbeddedId
-    private ProdutoPedidoPK id;
+    private ItemPedidoPK id;
 
     @ManyToOne
     @MapsId("idItem")
@@ -22,11 +22,11 @@ public class ProdutoPedido {
     @JoinColumn(name = "id_pedido", referencedColumnName = "id_pedido")
     private Pedido pedido;
 
-    public ProdutoPedidoPK getId() {
+    public ItemPedidoPK getId() {
         return id;
     }
 
-    public void setId(ProdutoPedidoPK id) {
+    public void setId(ItemPedidoPK id) {
         this.id = id;
     }
 

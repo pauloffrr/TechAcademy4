@@ -32,7 +32,7 @@ public class Item {
     private String imagemUrl;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProdutoPedido> pedidos = new ArrayList<>();
+    private List<ItemPedido> pedidos = new ArrayList<>();
 
     @Column(name = "desconto_percentual")
     private BigDecimal descontoPercentual = BigDecimal.ZERO;
@@ -117,11 +117,11 @@ public class Item {
     }
 
 
-    public void setPedidos(List<ProdutoPedido> pedidos) {
+    public void setPedidos(List<ItemPedido> pedidos) {
         this.pedidos = pedidos;
     }
 
-    public void addPedido(ProdutoPedido produtoPedido) {
+    public void addPedido(ItemPedido produtoPedido) {
         if (this.pedidos == null) {
             this.pedidos = new ArrayList<>();
         }

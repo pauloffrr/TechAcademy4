@@ -4,11 +4,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 
-import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class ProdutoPedidoPK {
+public class ItemPedidoPK {
 
     @Column(name = "id_pedido")
     private Integer idPedido;
@@ -36,7 +35,7 @@ public class ProdutoPedidoPK {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ProdutoPedidoPK that = (ProdutoPedidoPK) o;
+        ItemPedidoPK that = (ItemPedidoPK) o;
         return Objects.equals(idPedido, that.idPedido) && Objects.equals(idItem, that.idItem);
     }
 
