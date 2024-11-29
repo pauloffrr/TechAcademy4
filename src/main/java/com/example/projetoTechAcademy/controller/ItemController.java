@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -103,6 +104,19 @@ public class ItemController {
         return ResponseEntity.ok(item);
 
     }
+    @PutMapping("/{id}/aplicar-desconto")
+    public ResponseEntity<Item> aplicarDesconto(@PathVariable Integer id, @RequestParam BigDecimal percentualDesconto) {
+        Item item = repository.findById(id).orElseThrow(() -> new RuntimeException("Item não encontrado"));
 
+        // Aplicando o desconto no item (isso recalcula o preço e atualiza o desconto)
+        item.aplicarDesconto(percentualDesconto);
+
+        // Salvando o item atualizado (com o preço recalculado)
+        repository.save(item);
+
+        return ResponseEntity.ok(item);
     }
+
+
+}
 

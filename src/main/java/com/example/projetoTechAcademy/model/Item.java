@@ -34,6 +34,10 @@ public class Item {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProdutoPedido> pedidos = new ArrayList<>();
 
+    @Column(name = "desconto_percentual")
+    private BigDecimal descontoPercentual = BigDecimal.ZERO;
+
+
     public Integer getIdItem() {
         return idItem;
     }
@@ -82,6 +86,37 @@ public class Item {
         this.imagemUrl = imagemUrl;
     }
 
+    public BigDecimal getDescontoPercentual() {
+        return descontoPercentual;
+    }
+
+    public void setDescontoPercentual(BigDecimal descontoPercentual) {
+        this.descontoPercentual = descontoPercentual;
+    }
+
+    // Calcula o preço com o desconto aplicado
+    public BigDecimal calcularPrecoComDesconto() {
+        if (descontoPercentual.compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal desconto = preco.multiply(descontoPercentual).divide(BigDecimal.valueOf(100));
+            return preco.subtract(desconto);
+        }
+        return preco;
+    }
+
+    // Método para aplicar um desconto ao item
+    public void aplicarDesconto(BigDecimal percentual) {
+        if (percentual.compareTo(BigDecimal.ZERO) >= 0 && percentual.compareTo(BigDecimal.valueOf(100)) <= 0) {
+            this.descontoPercentual = percentual;
+
+            // Recalcular o preço com o desconto aplicado
+            BigDecimal desconto = this.preco.multiply(percentual).divide(BigDecimal.valueOf(100));
+            this.preco = this.preco.subtract(desconto);  // Atualiza o preço com o desconto aplicado
+        } else {
+            throw new IllegalArgumentException("Desconto deve estar entre 0% e 100%");
+        }
+    }
+
+
     public void setPedidos(List<ProdutoPedido> pedidos) {
         this.pedidos = pedidos;
     }
@@ -105,5 +140,4 @@ public class Item {
     public int hashCode() {
         return Objects.hashCode(idItem);
     }
-
 }

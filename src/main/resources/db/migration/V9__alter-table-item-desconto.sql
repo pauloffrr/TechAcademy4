@@ -1,0 +1,1 @@
+ALTER TABLE Item ADD COLUMN desconto_percentual DECIMAL(5, 2) DEFAULT 0;
