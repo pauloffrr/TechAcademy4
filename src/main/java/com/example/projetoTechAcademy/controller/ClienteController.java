@@ -65,6 +65,10 @@ public class ClienteController {
                         new IllegalArgumentException("Cliente não foi encontrada"));
 
         cliente.setNome(dto.nome());
+        cliente.setEmail(dto.email());
+        cliente.setSenha(dto.senha());
+        cliente.setTel(dto.tel());
+        cliente.setEndereco(dto.endereco());
 
         this.repository.save(cliente);
         return ResponseEntity.ok(cliente);
