@@ -8,20 +8,21 @@ import java.util.Objects;
 @Entity
 @Table(name = "Clientes")
 
-public class Cliente {
+public class Cliente extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Override
     @Column (name= "id_cliente")
-    private Integer idCliente;
+    public Integer getId() {
+        return super.getId();
+    }
 
-    @Column
+    @Column(nullable = false)
     private String nome;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String senha;
 
     @Column
@@ -29,14 +30,6 @@ public class Cliente {
 
     @Column
     private String endereco;
-
-    public Integer getId_cliente() {
-        return idCliente;
-    }
-
-    public void setId_cliente(Integer id_cliente) {
-        this.idCliente = id_cliente;
-    }
 
     public String getNome() {
         return nome;
@@ -83,11 +76,30 @@ public class Cliente {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cliente clientes = (Cliente) o;
-        return Objects.equals(idCliente, clientes.idCliente);
+        return Objects.equals(getId(), clientes.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(idCliente);
+        return Objects.hashCode(getId());
+    }
+
+    @Override
+    public boolean validate() {
+        return nome != null && !nome.isEmpty() &&
+                email != null && !email.isEmpty() &&
+                senha != null && !senha.isEmpty();
+    }
+
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", tel='" + tel + '\'' +
+                ", endereco='" + endereco + '\'' +
+                '}';
     }
 }

@@ -61,7 +61,9 @@ public class PedidoController {
                     .orElseThrow(() ->
                             new IllegalArgumentException("Status não foi encontrado"));
 
+            pedido.setDataPedido(dto.data_pedido());
             pedido.setStatusPedido(dto.status_pedido());
+            pedido.setValorTotal(dto.valor_total());
 
             this.repository.save(pedido);
             return ResponseEntity.ok(pedido);

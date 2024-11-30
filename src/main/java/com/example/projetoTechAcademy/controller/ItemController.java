@@ -88,7 +88,7 @@ public class ItemController {
 
         ItemPedidoPK pk = new ItemPedidoPK();
         pk.setIdItem(item.getIdItem());
-        pk.setIdPedido(pedido.getIdPedido());
+        pk.setIdPedido(pedido.getId());
 
         ItemPedido produtoPedido = new ItemPedido();
         produtoPedido.setId(pk);

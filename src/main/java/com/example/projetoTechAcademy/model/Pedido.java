@@ -6,15 +6,10 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "Pedido")
-public class Pedido {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_pedido")
-    private Integer idPedido;
+public class Pedido extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "id_cliente")
+    @JoinColumn(name = "id_pedido", referencedColumnName = "id_cliente")
     private Cliente cliente;
 
     @Column(name = "data_pedido")
@@ -28,14 +23,6 @@ public class Pedido {
     private BigDecimal valorTotal;
 
 
-
-    public Integer getIdPedido() {
-        return idPedido;
-    }
-
-    public void setIdPedido(Integer idPedido) {
-        this.idPedido = idPedido;
-    }
 
     public Cliente getCliente() {
         return cliente;
@@ -67,5 +54,10 @@ public class Pedido {
 
     public void setValorTotal(BigDecimal valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    @Override
+    public boolean validate() {
+        return false;
     }
 }
