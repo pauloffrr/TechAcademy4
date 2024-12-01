@@ -4,10 +4,9 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
 @Entity
 @Table
+
 public class Item {
 
     @Id
@@ -36,6 +35,7 @@ public class Item {
 
     @Column(name = "desconto_percentual")
     private BigDecimal descontoPercentual = BigDecimal.ZERO;
+
 
 
     public Integer getIdItem() {
@@ -94,7 +94,24 @@ public class Item {
         this.descontoPercentual = descontoPercentual;
     }
 
-    // Calcula o preço com o desconto aplicado
+    public List<ItemPedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<ItemPedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    // Método para adicionar um pedido à lista
+    public void addPedido(ItemPedido itemPedido) {
+        if (this.pedidos == null) {
+            this.pedidos = new ArrayList<>();
+        }
+        this.pedidos.add(itemPedido);
+    }
+
+
+    // Método para calcular o preço com desconto
     public BigDecimal calcularPrecoComDesconto() {
         if (descontoPercentual.compareTo(BigDecimal.ZERO) > 0) {
             BigDecimal desconto = preco.multiply(descontoPercentual).divide(BigDecimal.valueOf(100));
@@ -107,37 +124,11 @@ public class Item {
     public void aplicarDesconto(BigDecimal percentual) {
         if (percentual.compareTo(BigDecimal.ZERO) >= 0 && percentual.compareTo(BigDecimal.valueOf(100)) <= 0) {
             this.descontoPercentual = percentual;
-
-            // Recalcular o preço com o desconto aplicado
             BigDecimal desconto = this.preco.multiply(percentual).divide(BigDecimal.valueOf(100));
             this.preco = this.preco.subtract(desconto);  // Atualiza o preço com o desconto aplicado
         } else {
             throw new IllegalArgumentException("Desconto deve estar entre 0% e 100%");
         }
     }
-
-
-    public void setPedidos(List<ItemPedido> pedidos) {
-        this.pedidos = pedidos;
-    }
-
-    public void addPedido(ItemPedido produtoPedido) {
-        if (this.pedidos == null) {
-            this.pedidos = new ArrayList<>();
-        }
-        this.pedidos.add(produtoPedido);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Item item = (Item) o;
-        return Objects.equals(idItem, item.idItem);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(idItem);
-    }
 }
+
