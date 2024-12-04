@@ -1,5 +1,7 @@
 package com.example.projetoTechAcademy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -7,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table
+@Table(name = "Item")
 public class Item {
 
     @Id
@@ -24,8 +26,9 @@ public class Item {
     @Column(name = "preco")
     private BigDecimal preco;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
+    @JsonIgnore
     private Categoria categoria;
 
     @Column(name = "imagem_url")

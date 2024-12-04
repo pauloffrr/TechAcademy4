@@ -86,7 +86,8 @@ public class Cliente extends BaseEntity {
 
     @Override
     public boolean validate() {
-        return nome != null && !nome.isEmpty() &&
+
+        return super.validate() && nome != null && !nome.isEmpty() &&
                 email != null && !email.isEmpty() &&
                 senha != null && !senha.isEmpty();
     }

@@ -1,19 +1,25 @@
 package com.example.projetoTechAcademy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "Pedido")
-public class Pedido extends BaseEntity {
+public class Pedido {
 
-    @ManyToOne
-    @JoinColumn(name = "id_pedido", referencedColumnName = "id_cliente")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_pedido")
+    private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Cliente cliente;
 
     @Column(name = "data_pedido")
-    @Temporal(TemporalType.DATE)
     private LocalDate dataPedido;
 
     @Column(name = "status_pedido")
@@ -23,6 +29,13 @@ public class Pedido extends BaseEntity {
     private BigDecimal valorTotal;
 
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Cliente getCliente() {
         return cliente;
@@ -56,8 +69,4 @@ public class Pedido extends BaseEntity {
         this.valorTotal = valorTotal;
     }
 
-    @Override
-    public boolean validate() {
-        return false;
-    }
 }

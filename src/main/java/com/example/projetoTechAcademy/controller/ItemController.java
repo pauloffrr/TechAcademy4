@@ -2,13 +2,12 @@ package com.example.projetoTechAcademy.controller;
 
 
 import com.example.projetoTechAcademy.dto.ItemRequestDTO;
-import com.example.projetoTechAcademy.model.Item;
-import com.example.projetoTechAcademy.model.Pedido;
-import com.example.projetoTechAcademy.model.ItemPedido;
-import com.example.projetoTechAcademy.model.ItemPedidoPK;
+import com.example.projetoTechAcademy.model.*;
+import com.example.projetoTechAcademy.repository.CategoriaRepository;
 import com.example.projetoTechAcademy.repository.ItemRepository;
 import com.example.projetoTechAcademy.repository.PedidoRepositoy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,28 +24,38 @@ public class ItemController {
         @Autowired
         private PedidoRepositoy pedidoRepositoy;
 
-        @GetMapping
+        @Autowired
+        private CategoriaRepository categoriaRepository;
+
+    @GetMapping
         public List<Item> findAll() {
             return  this.repository.findAll();
         }
 
         @GetMapping("/{id}")
-        public Item findById(@PathVariable Integer id){
-            return this.repository.findById(id)
+        public ResponseEntity<Item> findById(@PathVariable Integer id){
+            Item item = repository.findById(id)
                     .orElseThrow(() ->
                             new IllegalArgumentException("Item não foi encontrada"));
+            return ResponseEntity.ok(item);
         }
 
         @PostMapping
-        public Item save(@RequestBody ItemRequestDTO dto) {
+        public ResponseEntity<Item> save(@RequestBody ItemRequestDTO dto) {
+            Categoria categoria = categoriaRepository.findById(dto.idCategoria())
+                    .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada"));
 
             Item item = new Item();
             item.setNome(dto.nomeItem());
             item.setDescProduto(dto.descProduto());
             item.setPreco(dto.preco());
+            item.setCategoria(categoria);
             item.setImagemUrl(dto.imagemUrl());
+            item.setDescontoPercentual(dto.desconto_percentual());
 
-            return this.repository.save(item);
+            item = this.repository.save(item);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(item);
         }
 
 

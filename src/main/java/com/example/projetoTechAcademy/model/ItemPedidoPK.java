@@ -4,10 +4,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class ItemPedidoPK {
+public class ItemPedidoPK implements Serializable {
 
     @Column(name = "id_pedido")
     private Integer idPedido;

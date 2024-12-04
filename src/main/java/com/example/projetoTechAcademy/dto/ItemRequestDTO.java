@@ -6,8 +6,9 @@ public record ItemRequestDTO (
     String nomeItem,
     String descProduto,
     BigDecimal preco,
-    BigDecimal desconto_percentual,
-    String imagemUrl
+    Integer idCategoria,
+    String imagemUrl,
+    BigDecimal desconto_percentual
 
 ) {
 }

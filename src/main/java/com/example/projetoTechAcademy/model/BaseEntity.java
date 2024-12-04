@@ -18,5 +18,7 @@ public abstract class BaseEntity {
         this.id = id;
     }
 
-    public abstract boolean validate();
+    public boolean validate() {
+        return this.id != null;
+    }
 }
