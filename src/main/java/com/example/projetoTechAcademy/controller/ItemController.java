@@ -1,6 +1,7 @@
 package com.example.projetoTechAcademy.controller;
 
 
+import com.example.projetoTechAcademy.dto.ItemPedidoDTO;
 import com.example.projetoTechAcademy.dto.ItemRequestDTO;
 import com.example.projetoTechAcademy.model.*;
 import com.example.projetoTechAcademy.repository.CategoriaRepository;
@@ -90,28 +91,40 @@ public class ItemController {
 
     @PostMapping("/{id}/add-pedido")
     public ResponseEntity<Item> addPedido(@PathVariable Integer id,
-                                          @RequestBody Integer pedidoId) {
+                                          @RequestBody ItemPedidoDTO dto) {
 
-        Item item = repository.findById(id).orElseThrow(() -> new RuntimeException("Item não encontrado"));
-        Pedido pedido = pedidoRepositoy.findById(pedidoId).orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+
+        Item item = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item não encontrado"));
+
+
+        Pedido pedido = pedidoRepositoy.findById(dto.idPedido())
+                .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+
 
         ItemPedidoPK pk = new ItemPedidoPK();
         pk.setIdItem(item.getIdItem());
         pk.setIdPedido(pedido.getId());
 
-        ItemPedido produtoPedido = new ItemPedido();
-        produtoPedido.setId(pk);
-        produtoPedido.setPedido(pedido);
-        produtoPedido.setItem(item);
 
-        item.addPedido(produtoPedido);
+        ItemPedido itemPedido = new ItemPedido();
+        itemPedido.setId(pk);
+        itemPedido.setPedido(pedido);
+        itemPedido.setItem(item);
+        itemPedido.setQuantidade(dto.quantidade());
+        itemPedido.setPrecoUnitario(dto.precoUnitario());
+
+
+        item.addPedido(itemPedido);
 
 
         repository.save(item);
 
-        return ResponseEntity.ok(item);
 
+        return ResponseEntity.ok(item);
     }
+
+
     @PutMapping("/{id}/aplicar-desconto")
     public ResponseEntity<Item> aplicarDesconto(@PathVariable Integer id, @RequestParam BigDecimal percentualDesconto) {
         Item item = repository.findById(id).orElseThrow(() -> new RuntimeException("Item não encontrado"));
