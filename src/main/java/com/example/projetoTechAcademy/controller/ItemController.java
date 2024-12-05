@@ -60,15 +60,15 @@ public class ItemController {
         }
 
 
-        @DeleteMapping("/{id}")
-        public ResponseEntity<Void> delete(@PathVariable Integer id) {
-            Item item = this.repository.findById(id)
-                    .orElseThrow(() ->
-                            new IllegalArgumentException("Item não foi encontrada"));
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        Item item = this.repository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Cliente não foi encontrada"));
 
-            this.repository.delete(item);
-            return ResponseEntity.noContent().build();
-        }
+        this.repository.delete(item);
+        return ResponseEntity.noContent().build();
+    }
 
         @PutMapping("/{id}")
         public ResponseEntity<Item> update(@PathVariable Integer id, @RequestBody ItemRequestDTO dto) {
